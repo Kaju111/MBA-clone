@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import IntroVideo from "./components/IntroVideo";
 import Section from "./components/Section";
 import freshTopicImg from "./assets/academy.png";
@@ -11,11 +11,15 @@ import coursesImg from "./assets/image2.png";
 import albumImg from "./assets/mba-cares.gif";
 import baratImg from "./assets/image1.png";
 import chaiWalaImg from "./assets/image3.png";
-
+import Footer from "./components/Footer";
+import Misc from "./components/Misc"
 
 import "./styles/App.scss";
 import "./styles/intro.scss";
 import "./styles/section.scss";
+import "./styles/footer.scss";
+import "./styles/misc.scss";
+import "./styles/mediaQuery.scss";
 
 const yellow = "#fff100",
   pink = "#ed1e79",
@@ -34,6 +38,35 @@ const App = () => {
     barat,
     chaiwala,
   } = data;
+
+  const dotCursor = (e) =>{
+    const cursor = document.querySelector(".cursor")
+    cursor.style.top = `${e.pageY - 6}px`
+    cursor.style.left = `${e.pageX - 6}px`
+
+    const element = e.target
+
+    if(element.getAttribute("data-cursorpointer")){
+      cursor.classList.add("cursorHover")
+    }
+    else if(element.getAttribute("data-cursorpointermini")){
+      cursor.classList.add("cursorHoverMini")
+    }
+
+    else{
+      cursor.classList.remove("cursorHover")
+      cursor.classList.remove("cursorHoverMini")
+    }
+
+  }
+
+  useEffect(() =>{
+    window.addEventListener("mousemove", dotCursor)
+    return() =>{
+      window.removeEventListener("mousemove",dotCursor)
+    }
+  })
+
 
   return (
     <div>
@@ -102,7 +135,7 @@ const App = () => {
         h3={courses.heading}
         text={courses.text}
         btnText={courses.btn}
-        imgSrc={coursesImg }
+        imgSrc={coursesImg}
         imgSize={"30%"}
         backgroundColor={yellow}
         headingColor={pink}
@@ -110,6 +143,46 @@ const App = () => {
         btnBgColor={pink}
         btnColor={yellow}
       />
+
+<Section
+        h3={album.heading}
+        text={album.text}
+        btnText={album.btn}
+        imgSrc={albumImg}
+        backgroundColor={white}
+        headingColor={pink}
+        textColor={brown}
+        btnBgColor={brown}
+        btnColor={yellow}
+      />
+
+      <Section
+        h3={barat.heading}
+        text={barat.text}
+        btnText={barat.btn}
+        imgSrc={baratImg}
+        backgroundColor={pink}
+        headingColor={yellow}
+        textColor={yellow}
+        btnBgColor={yellow}
+        btnColor={pink}
+      />
+
+        <Section
+        h3={chaiwala.heading}
+        text={chaiwala.text}
+        btnText={chaiwala.btn}
+        imgSrc={chaiWalaImg}
+        backgroundColor={white}
+        headingColor={pink}
+        textColor={brown}
+        btnBgColor={brown}
+        btnColor={yellow}
+      />
+
+      <Footer/>
+    
+      <Misc/>
     </div>
   );
 };
